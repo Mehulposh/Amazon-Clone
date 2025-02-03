@@ -151,8 +151,30 @@ nav{
     display: flex;
     flex-wrap: wrap;
     row-gap: 20px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin: 20px 30px;
+}
+
+.generated-image{
+    /* border: 2px solid gray; */
+    /* border-radius: 10px; */
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    
+    text-align: center;
+    
+    z-index: 3;
+}
+
+.generated-image img{
+    border: 1px solid gray;
+}
+
+.generated-image .category{
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .box-col{
