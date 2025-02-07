@@ -20,14 +20,21 @@
         <img src="/assets/amazon_logo_dark.png" class="logo" width="100" alt="">
     </a>
     <div class="signin-container">
-        <h1 class="signin-title">Sign Up</h1>
-        <h5 class="input-label">Your Name </h5>
-        <input type="text" placeholder="First & Last Name">
-        <h5 class="input-label">Email / Mobile No </h5>
-        <input type="text" placeholder="10 digits">
-        <h5 class="input-label">Password</h5>
-        <input type="password" placeholder="at least 6 characters">
-        <button>Continue</button>
+        <form action="" id="signupForm">
+            <h1 class="signin-title">Sign Up</h1>
+            
+            <label class="input-label" for="userName">Your Name</label>
+            <input type="text" id="userName" name="userName" placeholder="First & Last Name" required>
+            
+            <label class="input-label" for="userEmail">Email / Mobile No</label>
+            <input type="text" id="userEmail" name="emailOrMobile" placeholder="Enter your email or 10-digit mobile number" required>
+            
+            <label class="input-label" for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="At least 6 characters" minlength="6" required>
+            
+            <button type="submit">Submit</button>
+          </form>
+          
         <p class="signin-condition">By continuing , you agree to Amazon's <span> 
             Condition of use </span>and <span>Privacy notice</span> 
         </p>
@@ -60,6 +67,8 @@
             Amazon Copyrights
         </p>
     </footer>
+
+    <script src="/signup.js"></script>
 </body>
 </html>
 </body>
