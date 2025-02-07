@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        body{
+            background-color: white;
+        }
+        .result{
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result .card{
+            border: 2px solid gray;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">
+            <img src="./assets/amazon_logo.png" alt="amazon-logo" width="100">
+        </a>
+        <div class="nav-country">
+            <img src="./assets/location_icon.png" height="20">
+            <div>
+                <p>Deliver to</p>
+                <h1>India</h1>
+            </div>
+        </div>
+        <div class="nav-search">
+            <div class="nav-search-category">
+                <p>All</p>
+                <img src="./assets/dropdown_icon.png" height="12" alt="">
+            </div>
+            <input class="nav-search-input" type="text" placeholder="Search Amazon">
+            <button><img src="./assets/search_icon.png" class="nav-search-icon" alt=""></button>
+        </div>
+        <div class="nav-language">
+            <img src="./assets/us_flag.png" width="25" alt="">
+            <p>En</p>
+            <img src="./assets/dropdown_icon.png" width="8px" alt="">
+        </div>
+        <div class="nav-text">
+            <p><a href="/signin.html">
+                Hello, Sign in
+            </a></p>
+            <h1>Accounts & Lists 
+                <img src="./assets/dropdown_icon.png" width="8px" alt="">
+            </h1>
+        </div>
+        <div class="nav-text">
+            <p>Return </p>
+            <h1>& Orders</h1>
+        </div>
+        <a href="/signin.html" class="mobile-user-icon" style="display: none;">
+            <img src="/assets/user.png" alt="">
+        </a>
+        <a href="/cart.html" class="nav-cart">
+            <img src="./assets/cart_icon.png" width="35px" alt="">
+            <h4>Cart</h4>
+        </a>
+    </nav>
+    <div class="result">
+
+    </div>
+
+    <script>
+        const searchBox = document.querySelector(".nav-search-input");
+        const searchBtn = document.querySelector(".nav-search-icon");
+        const apiURL = "https://dummyjson.com/products";
+        
+        async function fetchProduct(){
+            try{
+                const rawData = await fetch(apiURL);
+                const prodData = await rawData.json();
+                return prodData.products;
+            }
+            catch(error){
+                console.error("Error fetching the data !");
+            }
+
+        }
+
+        function generateCard(item) {
+            return `
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="${item.thumbnail}" class="card-img-top" alt="${item.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.title}</h5>
+                            <p class="card-text">${item.price}</p>
+                        </div>
+                    </div>
+                </div>
+  `                   ;
+        }
+
+        async function renderProduct(query){
+            const data = await fetchProduct();
+            const resultContainer = document.querySelector(".result");
+            resultContainer.innerHTML = "";
+
+            const fillteredData = data.filter(item =>
+            item.title.toLowerCase().includes(query.toLowerCase())
+        );
+
+            if(fillteredData.length>0){
+                fillteredData.forEach(item => {
+                    resultContainer.innerHTML += generateCard(item);
+                });
+            }
+            else{
+                resultContainer.innerHTML = "<p> No Result Found </p>";
+            }
+        }
+
+        searchBtn.addEventListener("click",()=>{
+            const query = searchBox.value.trim();
+            renderProduct(query); 
+        });
+
+        searchBox.addEventListener("keypress",(e)=>{
+            if(e.key === "Enter"){
+                const query = e.target.value.trim();
+                renderProduct(query);
+            }
+        });
+    </script>
+</body>
+</html>
